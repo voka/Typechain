@@ -1,0 +1,11 @@
+// TypeScript한테 어떻게 JavaScript로 변환하는지 몇몇 옵션을 여기서 준다.
+// 간단하게 컴파일 옵션을 만들어 준다고 생각하면 된다.
+{
+    "compilerOptions":{
+        "module": "commonjs", // node.js를 평범히 사용, 다양한걸 import + export하게 해줌
+        "target": "ES2015", // 자바스크립트의 버전을 선택
+        "sourceMap": true // sourcemap 처리 
+    },
+    "include": ["index.ts"], //컴파일 과정에서 포함할 파일의 배열
+    "exclude": ["node_modules"] // 
+}
