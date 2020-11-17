@@ -6,6 +6,7 @@
         "target": "ES2015", // 자바스크립트의 버전을 선택
         "sourceMap": true // sourcemap 처리 
     },
-    "include": ["index.ts"], //컴파일 과정에서 포함할 파일의 배열
+    //"include": ["index.ts"], 컴파일 과정에서 포함할 파일의 배열
+    "include": ["src/**/*"], //src파일안에 있는 모든 파일을 컴파일 한다.
     "exclude": ["node_modules"] // 
 }

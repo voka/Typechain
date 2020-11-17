@@ -1,5 +1,5 @@
 # Typechain
-
+11.16
 Learning Typescript by making a Blockchain with it
 
 처음에 yarn 설치하려고 하는데 무슨 관리자 권한으로 power shell 실행시켜서 세팅해야 하는데 그걸 몰라서 겁나 헤맸다.
@@ -39,3 +39,38 @@ package.json에
 
 Node.js는 TypeScript를 이해하지 못하기 때문에 
 ts파일을 js파일로 변환 후 node.js로 실행시키는 것 
+
+11.17 
+Type언어 -> 쓸 변수의 종류와 데이터를 설정해줘야함.
+ex . string, array of num, boolean 등등
+이런 이유로 typescript로 개발을 할 시,
+섬세함과 더불어 어떤 행동이 일어날 지 알 수 있게 된다.
+
++ const name 과 같은 변수를 지정할 땐 어딘가에 
+export{};를 적어줘야 한다. -> 이 파일이 모듈이라는 걸
+알려주기 위함이다.
+
+쓰려는 함수에 커서를 가져가면 어떤 타입의 인자를 받는지,
+어떤 타입의 값을 반환하는지 다 알 수 있다.
+
+yarn add tsc-watch --dev 패키지 다운 받음
+그 후, src -> 소스파일을 모을 폴더, dist ->
+
+package.json에서 scripts안을 아래와 같이 바꿔줌
+"start" : "tsc-watch --onSuccess \" node dist/index.js\" "
+tsconfig.json에서 
+"include" : ["src/**/*"], (//src파일안에 있는 모든 파일을 컴파일 한다.) 로 바꾼다.
+
+1. $ tsc-watch -onSuccess " node dist/index.js"
+Cannot find module 'typescript/bin/tsc'
+error Command failed with exit code 9. 와 같은 에러 나시는 분들은
+npm i -D @types/node typescript ts-node 로 해결하시면 됩니다
+
+2. tsc-watch 오류 
+npm install -g typescript
+npm link typescript
+    
+    
+tsc-watch를 켜둔다음 계속 파일을 수정하면
+파일이 저장될 때 마다 파일이 바꼈는지 확인하면서 
+오류가 발생했는지를 지속적으로 알려준다.!!
