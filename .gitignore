@@ -1,0 +1,8 @@
+## NESOY Ignore File ##
+#.()로 끝나는 모든 파일
+*.log
+*.bak
+*.lock
+
+#node_modules안에 존재하는 모든 파일들
+node_modules/
