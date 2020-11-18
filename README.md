@@ -59,6 +59,8 @@ yarn add tsc-watch --dev 패키지 다운 받음
 package.json에서 scripts안을 아래와 같이 바꿔줌
 "start" : "tsc-watch --onSuccess \" node dist/index.js\" "
 tsconfig.json에서 
+CompilerOptions 에서
+"outDir": "dist",를 추가해 준다.
 "include" : ["src/**/*"], (//src파일안에 있는 모든 파일을 컴파일 한다.) 로 바꾼다.
 
 1. $ tsc-watch -onSuccess " node dist/index.js"
@@ -74,3 +76,21 @@ npm link typescript
 tsc-watch를 켜둔다음 계속 파일을 수정하면
 파일이 저장될 때 마다 파일이 바꼈는지 확인하면서 
 오류가 발생했는지를 지속적으로 알려준다.!!
+
+11.18
+interface -> Object를 인자로 넘겨줄때 그 안의 데이터 타입을 알려주는 기능
+-> but interface는 자바스크립트로 컴파일 되지 않는다!!
+그래서 interface를 JS에 넣고 싶을때 주로 쓰는 것이 Class이다.
+Class는 typescript에서 대단한 기능을 한다.
+-> 코드를 컨트롤 할 수 있게 해준다.
+
+JS에서는 class 선언시 각 데이터들이 어떤 타입을 가지고 있는지, 어떤 권한을 가지고 있는지 선언할 필요 X
+TS에서는 class 선언시 데이터 타입, Permission을 선언해야한다.
+
+but TS에서 선언한 클래스의 Permission은 JS에서 신경 X
+
+private 변수 선언시 , Human class 밖에서 호출하면 Error 발생 -> 변수, 속성 보호등이 가능하다.
+
+Start BlockChain
+
+TS는 우리가 하지 않으면 좋은, 더 빨리 갈 수 있는 길을 제시해 준다. 특히 오류를 찾을 때는 컴파일 자체가 되지않고, 그 이유가 console창에 떠서 확인 가능하다.
