@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 /* interface Human{
     name: string;
     age : number;
@@ -46,8 +47,8 @@ console.log(sayHi(Lynn));
 
 
 
-export{}; */
-Object.defineProperty(exports, "__esModule", { value: true });
+ */
+const CryptoJS = require("crypto-js");
 class Block {
     constructor(index, hash, previousHash, data, timestamp) {
         this.index = index;
@@ -57,7 +58,22 @@ class Block {
         this.timestamp = timestamp;
     }
 }
+Block.calculateBlockHash = (index, previousHash, timestamp, data) => CryptoJS.SHA256(index + previousHash + timestamp + data).toString();
+console.log(Block.calculateBlockHash(0, "122343215413541", 12341, "Hello"));
 const genesisBlock = new Block(0, "122343215413541", "", "Hello", 12341);
 let blockchain = [genesisBlock];
 console.log(blockchain);
+const getBlockchain = () => blockchain; //블록체인을 배열로 반환함
+const getLatestBlock = () => blockchain[blockchain.length - 1]; //블록체인 길이 알기 위함
+const getNewTimeStamp = () => Math.round(new Date().getTime() / 1000);
+const createNewBlock = (data) => {
+    const previousBlock = getLatestBlock();
+    const newIndex = previousBlock.index + 1;
+    const newTimestamp = getNewTimeStamp();
+    const newHash = Block.calculateBlockHash(newIndex, previousBlock.hash, newTimestamp, data);
+    const newBlock = new Block(newIndex, newHash, previousBlock.hash, data, newTimestamp);
+    return newBlock;
+};
+// console.log(createNewBlock("hello"), createNewBlock("bye bye"));
+const isBlockValid = { candidateBlock }; // candidat, prevois 블럭을 불러올 함수
 //# sourceMappingURL=index.js.map

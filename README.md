@@ -94,3 +94,64 @@ private 변수 선언시 , Human class 밖에서 호출하면 Error 발생 -> �
 Start BlockChain
 
 TS는 우리가 하지 않으면 좋은, 더 빨리 갈 수 있는 길을 제시해 준다. 특히 오류를 찾을 때는 컴파일 자체가 되지않고, 그 이유가 console창에 떠서 확인 가능하다.
+
+11.19
+
+creating a block par two! 
+
+Hash -> 모든 속성을 수학적으로 하나의 문자열로 결합한것 (아주 길다.)
+
+
+(Hash is the string, that all attribute is combined mathematically. he is very very long )
+
+터미널에 yarn add crypto-js  입력 후 import
+TS는 import하는 과정이 조금 다르다. 
+아래와 같이 import한다.
+import * as CryptoJS from "crypto-js";
+
+신기하게도 TS는 Class안에 static method를 만드는데,
+이 method는 클래스가 생성되지 않았어도 실행할 수 있는 것이다.
+이건 그냥 자바스크립트 이론이다.
+->그냥 클래스 안에서 항상 사용할 수 있는 method라고 이해하면 된다.
+
+static이라고 선언하지 않은 함수는 class밖에서 사용할 수 없고, static이라고 선언시 클래스 선언 하지 않아도 얼마든지 인자만 넣어준다면 사용할 수 있다.
+
+class Block{
+    public index :number;
+    public hash :string;
+    public previousHash :string;
+    public data : string;
+    public timestamp :number;
+
+    static calculateBlockHash = (
+        index:number, 
+        previousHash:string, 
+        timestamp:number, 
+        data:string
+    ) : string => CryptoJS.SHA256(index + previousHash + timestamp + data).toString();
+
+
+    constructor(
+        index :number,
+        hash : string,
+        previousHash:string,
+        data:string,
+        timestamp : number
+    ){
+        this.index = index;
+        this.hash = hash;
+        this.previousHash = previousHash;
+        this.data = data;
+        this.timestamp = timestamp;
+
+    }
+}
+
+이런 식으로 만들게 되는데, 출력해보니까 이건 보안이 철저할 수 밖에 없는게 보기만 해도 이건 뭐지 하는 생각밖에 들지 않게 한다.
+
++=+ 
+getBlockchain 함수 -> 블록체인 추가 및 블록체인 배열을 return함. 
+
+처음에 코드 작성하고 나서 인덱스에 문제가 있는 거 같아서 봤더니 오류는 아니였다고 함.
+
++ 우리는 새로운 블럭을 만드는 것 ! , NOT ADD

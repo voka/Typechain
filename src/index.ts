@@ -45,8 +45,8 @@ console.log(sayHi(Lynn));
 
 
 
-export{}; */
-
+ */
+import * as CryptoJS from "crypto-js";
 import { time } from "console";
 
 class Block{
@@ -55,6 +55,14 @@ class Block{
     public previousHash :string;
     public data : string;
     public timestamp :number;
+
+    static calculateBlockHash = (
+        index:number, 
+        previousHash:string, 
+        timestamp:number, 
+        data:string
+    ) : string => CryptoJS.SHA256(index + previousHash + timestamp + data).toString();
+
     constructor(
         index :number,
         hash : string,
@@ -70,9 +78,48 @@ class Block{
 
     }
 }
+console.log(Block.calculateBlockHash(0,"122343215413541",12341,"Hello"));
 
 const genesisBlock:Block = new Block(0,"122343215413541","","Hello",12341);
 
-let blockchain: [Block] = [genesisBlock];
+let blockchain: Block[] = [genesisBlock];
 
 console.log(blockchain)
+
+const getBlockchain = () : Block[] => blockchain;//블록체인을 배열로 반환함
+
+const getLatestBlock = () : Block => blockchain[blockchain.length - 1];//블록체인 길이 알기 위함
+
+const getNewTimeStamp = () : number => Math.round(new Date().getTime() / 1000);
+
+const createNewBlock = (data:string) : Block => {
+    const previousBlock : Block = getLatestBlock();
+    const newIndex : number = previousBlock.index + 1;
+    const newTimestamp : number = getNewTimeStamp();
+    const newHash : string = Block.calculateBlockHash(
+        newIndex,
+        previousBlock.hash,
+        newTimestamp,
+        data
+    );
+    const newBlock : Block = new Block(
+        newIndex,
+        newHash,
+        previousBlock.hash,
+        data,
+        newTimestamp
+    );
+    return newBlock;
+};
+// console.log(createNewBlock("hello"), createNewBlock("bye bye"));
+
+const isBlockValid = {candidateBlock}; // candidat, prevois 블럭을 불러올 함수
+//블록의 구조 판단용
+
+//!! 블로체인의 기반은 블록들이 자신의 이 바로 블록으로 
+
+
+
+
+
+export{};
