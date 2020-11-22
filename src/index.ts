@@ -50,12 +50,6 @@ import * as CryptoJS from "crypto-js";
 import { time } from "console";
 
 class Block{
-    public index :number;
-    public hash :string;
-    public previousHash :string;
-    public data : string;
-    public timestamp :number;
-
     static calculateBlockHash = (
         index:number, 
         previousHash:string, 
@@ -63,8 +57,24 @@ class Block{
         data:string
     ) : string => CryptoJS.SHA256(index + previousHash + timestamp + data).toString();
 
+
+    //블럭의 구조(각 변수의 데이터 타입의 일치)가 맞다면 True , 아니면 False -> 코드가 길어질태지만 js가 예쁘게 만들어 준다.
+    //쉽게말해 블럭 구조 검사기임.
+    static validataStructure = (aBlock : Block) : boolean => 
+        typeof aBlock.index === "number" && 
+        typeof aBlock.hash ==="string" && 
+        typeof aBlock.previousHash === "string" &&
+        typeof aBlock.timestamp === "number" &&
+        typeof aBlock.data === "string"; 
+
+    public index :number;
+    public previousHash :string;
+    public hash :string;
+    public timestamp :number;
+    public data : string;
+    
     constructor(
-        index :number,
+        index :number, 
         hash : string,
         previousHash:string,
         data:string,
@@ -78,7 +88,7 @@ class Block{
 
     }
 }
-console.log(Block.calculateBlockHash(0,"122343215413541",12341,"Hello"));
+//console.log(Block.calculateBlockHash(0,"122343215413541",12341,"Hello"));
 
 const genesisBlock:Block = new Block(0,"122343215413541","","Hello",12341);
 
@@ -108,18 +118,61 @@ const createNewBlock = (data:string) : Block => {
         previousBlock.hash,
         data,
         newTimestamp
-    );
+    ); 
+    addBlock(newBlock);
     return newBlock;
 };
 // console.log(createNewBlock("hello"), createNewBlock("bye bye"));
+//블록의 해쉬를 열어보기
+const getHashforBlock = (aBlock : Block) : string => Block.calculateBlockHash(
+    aBlock.index, 
+    aBlock.previousHash, 
+    aBlock.timestamp, 
+    aBlock.data
+)
 
-const isBlockValid = {candidateBlock}; // candidat, prevois 블럭을 불러올 함수
+
+const isBlockValid = (
+    candidateBlock : Block, 
+    previousBlock: Block
+): boolean => {
+    if(!Block.validataStructure(candidateBlock)){
+        return false;
+    }
+    else if(previousBlock.index + 1 !== candidateBlock.index){
+        return false;
+    }
+    else if(previousBlock.hash !== candidateBlock.previousHash){
+        return false;
+    } //블록의 해쉬를 따로 계산해서 들어온 블록의 해쉬가 실제로 있는지 체크 해야함.
+    else if(getHashforBlock(candidateBlock) !== candidateBlock.hash){
+        return false;
+    }else{
+        return true;
+    }
+
+
+} ;
+    //블럭의 구조가 유호한지 아닌지를 판단함 -> static 클래스 하나 더 만듬 
+     // candidat, prevois 블럭을 불러올 함수
 //블록의 구조 판단용
 
 //!! 블로체인의 기반은 블록들이 자신의 이 바로 블록으로 
 
 
 
+//add block
+// 아무것도 리턴 안함 그저 블록체인을 만들어 나갈 뿐
+const addBlock = (candidateBlock : Block) : void =>{
+    if(isBlockValid(candidateBlock, getLatestBlock())){
+        blockchain.push(candidateBlock);
+    }
+};
 
+createNewBlock("seconde Block");
+createNewBlock("third Block");
+createNewBlock("fourth Block");
+
+console.log(blockchain);
 
 export{};
