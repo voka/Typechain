@@ -11,7 +11,7 @@ choco install yarn을 했다. 설치는 다 됐는데 이제 또 문제는 yarn�
 찾아보니까 관리자권한으로 cmd에 들어간 후 
 
 1. powershell 입력
-2. Set-Executionpolocy Remotesigned입력
+2. Set-ExecutionPolㅑcy Remotesigned입력
 -> 위의 것은 PowerShell의 실행 정책인데, 
 기본은 Restrited(개별 명령 허용, 스크립트실행 제한)다
 그래서 RemoteSigned(스크립트 실행 허용, 서명됐지만 악의적인 스크립트 실행 가능)를 쓰는것이다.
